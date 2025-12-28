@@ -9,29 +9,38 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="533f55a0-d5fc-401d-b6e7-c9dfa41ee256" name="Changes" comment="">
+    <list default="true" id="533f55a0-d5fc-401d-b6e7-c9dfa41ee256" name="Changes" comment="fahh">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/git_toolbox_prj.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dao/ConsultaDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dao/DocumentacaoClinicaDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dao/GerenteDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dao/HistoricoDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dao/ServicoDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/Cirurgia.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/Cliente.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/Clinica.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/Consulta.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/Desparasitacao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/Documenta.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/Exame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/Paciente.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/Rececionista.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/Requesita.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/ServicoMedicoAgendamento.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/TratamentoTerapeutico.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/Vacinacao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/Veterinario.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/utils/AuthDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VetCareApp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/VetCareApp.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/VetCareApp/META-INF/MANIFEST.MF" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/VetCareApp/META-INF/context.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/VetCareApp/WEB-INF/classes/servlet/TestServlet.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/VetCareApp/WEB-INF/web.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/VetCareApp/index.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/VetCareApp/login.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/VetCareApp/servlet/TestServlet.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/DBConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/DBConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/login.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/login.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/VetCareApp-0.0.1-SNAPSHOT/META-INF/MANIFEST.MF" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/VetCareApp-0.0.1-SNAPSHOT/WEB-INF/classes/servlet/TestServlet.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/VetCareApp-0.0.1-SNAPSHOT/WEB-INF/web.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/VetCareApp-0.0.1-SNAPSHOT/index.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/VetCareApp-0.0.1-SNAPSHOT/login.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/servlet/TestServlet.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/m2e-wtp/web-resources/META-INF/MANIFEST.MF" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/m2e-wtp/web-resources/META-INF/maven/org.example/VetCareApp/pom.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/m2e-wtp/web-resources/META-INF/maven/org.example/VetCareApp/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dao/AgendamentoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/AgendamentoDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dao/AnimalDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/AnimalDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dao/TutorDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/TutorDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dao/VeterinarioDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/VeterinarioDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Agendamento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Agendamento.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Animal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Animal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Servico.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Servico.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Tutor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Tutor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,26 +50,26 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Jsp File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Ruben23Z"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Ruben23Z&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Ruben23Z/Tp2-SBD-VetCare.git",
-    "accountId": "3d390bad-0966-40ee-a68a-c92afee985f7"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Ruben23Z/Tp2-SBD-VetCare.git&quot;,
+    &quot;accountId&quot;: &quot;3d390bad-0966-40ee-a68a-c92afee985f7&quot;
   }
-}]]></component>
+}</component>
   <component name="LogFilters">
     <option name="FILTER_ERRORS" value="false" />
     <option name="FILTER_WARNINGS" value="false" />
@@ -84,6 +93,8 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Tomcat Server.Tomcat 10.1.41.executor": "Run",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "git-widget-placeholder": "main",
@@ -100,6 +111,11 @@
     "project.structure.side.proportion": "0.2",
     "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
   }
 }]]></component>
   <component name="RecentsManager">
@@ -115,6 +131,7 @@
       <recent name="C:\Users\ruben\OneDrive - Instituto Politécnico de Lisboa\Ambiente de Trabalho\VetCareAPP\src\main" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="model" />
       <recent name="utils" />
       <recent name="dao" />
       <recent name="servlet" />
@@ -240,8 +257,18 @@
       <option name="presentableId" value="Default" />
       <updated>1766855583716</updated>
       <workItem from="1766855584795" duration="894000" />
-      <workItem from="1766856611472" duration="6347000" />
+      <workItem from="1766856611472" duration="7064000" />
+      <workItem from="1766949545720" duration="4373000" />
     </task>
+    <task id="LOCAL-00001" summary="fahh">
+      <option name="closed" value="true" />
+      <created>1766880433167</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1766880433168</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -257,6 +284,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="fahh" />
+    <option name="LAST_COMMIT_MESSAGE" value="fahh" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
