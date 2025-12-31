@@ -1,0 +1,8 @@
+<utilizadores>
+    <utilizador>
+        <username>admin</username>
+        <password>1234</password>
+        <cargo>Cliente</cargo>
+        <idUtilizador>1</idUtilizador>
+    </utilizador>
+</utilizadores>

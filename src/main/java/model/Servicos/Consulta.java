@@ -17,8 +17,8 @@ public class Consulta extends ServicoMedicoAgendamento {
     private BigDecimal pesoMedido;
     private String motivo;
 
-    public Consulta(int idServico, String descricao) {
-        super(idServico, descricao);
+    public Consulta(int idServico, String descricao, LocalDateTime dataHoraInicio) {
+        super(idServico, descricao,  dataHoraInicio);
     }
 
     // getters e setters

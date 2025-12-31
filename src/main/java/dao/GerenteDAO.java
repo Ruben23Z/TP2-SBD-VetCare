@@ -25,4 +25,28 @@ public class GerenteDAO {
                 "SELECT * FROM Avaliacoes_Detalhadas"
         ).executeQuery();
     }
+public void atribuirGerente(int idUtilizador) throws SQLException {
+
+        String sql = "INSERT INTO Gerente (iDUtilizador) VALUES (?)";
+
+        try (Connection c = DBConnection.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+
+            ps.setInt(1, idUtilizador);
+            ps.executeUpdate();
+        }
+    }
+
+    public boolean isGerente(int idUtilizador) throws SQLException {
+
+        String sql = "SELECT 1 FROM Gerente WHERE iDUtilizador = ?";
+
+        try (Connection c = DBConnection.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+
+            ps.setInt(1, idUtilizador);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        }
+    }
 }

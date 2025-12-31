@@ -162,44 +162,6 @@
             padding: 45px 35px;
         }
 
-        .user-type-selector {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 30px;
-        }
-
-        .user-type-btn {
-            padding: 12px 10px;
-            border: 2px solid #e0e0e0;
-            background: white;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-align: center;
-            font-size: 12px;
-            font-weight: 600;
-            color: #666;
-        }
-
-        .user-type-btn:hover {
-            border-color: #667eea;
-            transform: translateY(-2px);
-        }
-
-        .user-type-btn.active {
-            border-color: #667eea;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .user-type-btn .icon {
-            font-size: 24px;
-            display: block;
-            margin-bottom: 5px;
-        }
-
         .form-group {
             margin-bottom: 28px;
             position: relative;
@@ -226,6 +188,7 @@
             font-size: 18px;
             color: #999;
             transition: color 0.3s;
+            pointer-events: none;
         }
 
         .form-group input {
@@ -245,7 +208,7 @@
             transform: translateY(-2px);
         }
 
-        .form-group input:focus + .input-icon {
+        .form-group input:focus ~ .input-icon {
             color: #667eea;
         }
 
@@ -444,39 +407,36 @@
     <div class="login-form">
         <%
             String erro = request.getParameter("erro");
-            if (erro != null && erro.equals("1")) {
+            if (erro != null) {
+                String mensagemErro = "";
+                switch(erro) {
+                    case "1":
+                        mensagemErro = "⚠️ Credenciais inválidas! Verifique o utilizador e senha.";
+                        break;
+                    case "2":
+                        mensagemErro = "⚠️ Utilizador não encontrado no sistema.";
+                        break;
+                    case "3":
+                        mensagemErro = "⚠️ Perfil de utilizador inválido.";
+                        break;
+                    default:
+                        mensagemErro = "⚠️ Erro ao efetuar login. Tente novamente.";
+                }
         %>
         <div class="error-message">
-            ⚠️ Credenciais inválidas! Verifique o utilizador e senha.
+            <%= mensagemErro %>
         </div>
         <% } %>
 
-        <div class="user-type-selector">
-            <div class="user-type-btn active" data-type="cliente">
-                <span class="icon">👤</span>
-                <span>Cliente</span>
-            </div>
-            <div class="user-type-btn" data-type="veterinario">
-                <span class="icon">🩺</span>
-                <span>Veterinário</span>
-            </div>
-            <div class="user-type-btn" data-type="rececionista">
-                <span class="icon">💼</span>
-                <span>Rececionista</span>
-            </div>
-        </div>
-
-        <form action="validarLogin.jsp" method="post">
-            <input type="hidden" name="tipoUtilizador" id="tipoUtilizador" value="cliente">
-
+        <form action="login" method="post">
             <div class="form-group">
-                <label for="usuario">ID de Utilizador</label>
+                <label for="username">Nome de Utilizador</label>
                 <div class="input-wrapper">
                     <input
                             type="text"
-                            id="usuario"
-                            name="usuario"
-                            placeholder="Digite o seu ID de utilizador"
+                            id="username"
+                            name="username"
+                            placeholder="Digite o seu nome de utilizador"
                             required
                             autocomplete="username"
                     >
@@ -485,12 +445,12 @@
             </div>
 
             <div class="form-group">
-                <label for="senha">Palavra-passe</label>
+                <label for="password">Palavra-passe</label>
                 <div class="input-wrapper">
                     <input
                             type="password"
-                            id="senha"
-                            name="senha"
+                            id="password"
+                            name="password"
                             placeholder="Digite a sua palavra-passe"
                             required
                             autocomplete="current-password"
@@ -519,29 +479,5 @@
         </div>
     </div>
 </div>
-
-<script>
-    // Seletor de tipo de utilizador
-    document.querySelectorAll('.user-type-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            document.querySelectorAll('.user-type-btn').forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            document.getElementById('tipoUtilizador').value = this.dataset.type;
-
-            // Atualizar placeholder baseado no tipo
-            const usuarioInput = document.getElementById('usuario');
-            switch(this.dataset.type) {
-                case 'veterinario':
-                    usuarioInput.placeholder = 'Nº de Licença';
-                    break;
-                case 'rececionista':
-                    usuarioInput.placeholder = 'ID de Rececionista';
-                    break;
-                default:
-                    usuarioInput.placeholder = 'NIF ou ID de Cliente';
-            }
-        });
-    });
-</script>
 </body>
 </html>

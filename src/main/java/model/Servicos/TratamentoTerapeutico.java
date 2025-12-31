@@ -10,8 +10,8 @@ public class TratamentoTerapeutico extends ServicoMedicoAgendamento {
     private LocalDateTime dataHoraFim;
     private String tipoTratamento;
 
-    public TratamentoTerapeutico(int idServico, String descricao) {
-        super(idServico, descricao);
+    public TratamentoTerapeutico(int idServico, String descricao, LocalDateTime dataHoraFim) {
+        super(idServico, descricao,  dataHoraFim);
     }
 
     // getters e setters

@@ -9,19 +9,24 @@ import java.util.List;
 
 public class UtilizadorDAO {
 
-    public void insert(Utilizador u) throws SQLException {
-        String sql = "INSERT INTO Utilizador (iDUtilizador, isVeterinario, isRececionista, isCliente) VALUES (?, ?, ?, ?)";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, u.getiDUtilizador());
-            ps.setBoolean(2, u.isVeterinario());
-            ps.setBoolean(3, u.isRececionista());
-            ps.setBoolean(4, u.isCliente());
+    public void inserir(int id, boolean vet, boolean rec, boolean cli) throws SQLException {
+        String sql = """
+            INSERT INTO Utilizador (iDUtilizador, isVeterinario, isRececionista, isCliente)
+            VALUES (?, ?, ?, ?)
+        """;
+
+        try (Connection c = DBConnection.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+            ps.setBoolean(2, vet);
+            ps.setBoolean(3, rec);
+            ps.setBoolean(4, cli);
             ps.executeUpdate();
         }
     }
 
-    public void delete(int id) throws SQLException {
+    public void apagar(int id) throws SQLException {
         String sql = "DELETE FROM Utilizador WHERE iDUtilizador=?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -30,7 +35,7 @@ public class UtilizadorDAO {
         }
     }
 
-    public void update(Utilizador u) throws SQLException {
+    public void atualizar(Utilizador u) throws SQLException {
         String sql = "UPDATE Utilizador SET isVeterinario=?, isRececionista=?, isCliente=? WHERE iDUtilizador=?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -53,7 +58,9 @@ public class UtilizadorDAO {
                         rs.getInt("iDUtilizador"),
                         rs.getBoolean("isVeterinario"),
                         rs.getBoolean("isRececionista"),
-                        rs.getBoolean("isCliente")
+                        rs.getBoolean("isCliente"),
+                        rs.getBoolean("isGerente")
+
                 );
             }
         }
@@ -71,7 +78,9 @@ public class UtilizadorDAO {
                         rs.getInt("iDUtilizador"),
                         rs.getBoolean("isVeterinario"),
                         rs.getBoolean("isRececionista"),
-                        rs.getBoolean("isCliente")
+                        rs.getBoolean("isCliente"),
+                        rs.getBoolean("isGerente")
+
                 ));
             }
         }

@@ -9,6 +9,16 @@ import java.util.*;
 
 public class AgendamentoDAO {
 
+
+
+
+
+//    APAGAR?????
+
+
+
+
+
     public void create(int idPaciente, int idUtilizador,
                        LocalDateTime data, String localidade) throws SQLException {
 

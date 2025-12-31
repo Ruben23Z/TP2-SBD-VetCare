@@ -6,13 +6,9 @@ public class Veterinario extends Utilizador {
     private int idade;
     private String especialidade;
 
-    public Veterinario() {
-        super();
-        setVeterinario(true);
-    }
 
     public Veterinario(int iDUtilizador, String nLicenca, String nome, int idade, String especialidade) {
-        super(iDUtilizador, true, false, false);
+        super(iDUtilizador, true, false, false, false);
         this.nLicenca = nLicenca;
         this.nome = nome;
         this.idade = idade;

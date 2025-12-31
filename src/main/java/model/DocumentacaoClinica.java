@@ -1,6 +1,6 @@
 package model;
 
-public class Documenta {
+public class DocumentacaoClinica {
 
     private int idServico;
     private String diagnostico;
@@ -9,8 +9,8 @@ public class Documenta {
 
 
 //    VERIFICAR SE IDSERVICO FICA NO CONSTRUTOR
-    public Documenta(int idServico, String diagnostico,
-                     String prescricoes, String resultados) {
+    public DocumentacaoClinica(int idServico, String diagnostico,
+                               String prescricoes, String resultados) {
         this.idServico = idServico;
         this.diagnostico = diagnostico;
         this.prescricoes = prescricoes;

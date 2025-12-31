@@ -506,7 +506,7 @@
         <p>Assistência médica especializada para animais de companhia. Sistema integrado de gestão com histórico clínico completo, agendamento inteligente e atendimento 24/7 em todas as nossas unidades.</p>
         <div class="hero-buttons">
             <a href="login.jsp" class="btn-primary">Agendar Consulta</a>
-            <a href="#servicos" class="btn-secondary">Nossos Serviços</a>
+            <a href="#servicos" class="btn-secondary">Os nossos Serviços</a>
         </div>
     </div>
     <div class="hero-image">
@@ -576,7 +576,7 @@
     <div class="about-container">
         <h2>Sobre a VetCare</h2>
         <p>A VetCare é uma cadeia de clínicas veterinárias dedicada ao cuidado e bem-estar de animais de companhia. Com clínicas estrategicamente localizadas, oferecemos atendimento de excelência com veterinários licenciados e especializados.</p>
-        <p>Nosso sistema integrado de gestão mantém toda a informação centralizada: desde o cadastro de espécies e raças (com características taxonómicas completas), até o histórico clínico detalhado de cada paciente, incluindo consultas, exames, cirurgias, vacinação e tratamentos.</p>
+        <p>O nosso sistema integrado de gestão mantém toda a informação centralizada: desde o cadastro de espécies e raças (com características taxonómicas completas), até o histórico clínico detalhado de cada paciente, incluindo consultas, exames, cirurgias, vacinação e tratamentos.</p>
         <p>Facilitamos o relacionamento com os clientes através de um sistema de agendamento inteligente, permitindo marcações online, cancelamentos e reagendamentos. Os tutores podem ainda avaliar a qualidade dos serviços prestados, ajudando-nos a melhorar continuamente.</p>
     </div>
 </section>

@@ -10,8 +10,8 @@ public class Exame extends ServicoMedicoAgendamento {
     private LocalDateTime dataHoraFim;
     private Integer duracao; // em minutos
 
-    public Exame(int idServico, String descricao) {
-        super(idServico, descricao);
+    public Exame(int idServico, String descricao, LocalDateTime  dataHoraFim) {
+        super(idServico, descricao,  dataHoraFim);
     }
 
     // getters e setters

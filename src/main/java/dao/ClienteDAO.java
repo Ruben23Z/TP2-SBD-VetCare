@@ -9,29 +9,57 @@ import java.util.List;
 
 public class ClienteDAO {
 
-    public void insert(Cliente c) throws SQLException {
-        String sql1 = "INSERT INTO Utilizador (iDUtilizador, isCliente) VALUES (?, ?)";
-        String sql2 = "INSERT INTO Cliente (iDUtilizador, NIF, nome, email, telefone, rua, pais, distrito, concelho, freguesia) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public void inserir(Cliente c) throws SQLException {
+        Connection conn = DBConnection.getConnection();
+        conn.setAutoCommit(false);
 
+        try {
+            new UtilizadorDAO().inserir(
+                    c.getiDUtilizador(), false, false, true
+            );
+
+            PreparedStatement ps = conn.prepareStatement("""
+                INSERT INTO Cliente
+                (iDUtilizador, NIF, nome, email, telefone,
+                 rua, pais, distrito, concelho, freguesia)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """);
+
+            ps.setInt(1, c.getiDUtilizador());
+            ps.setString(2, c.getNIF());
+            ps.setString(3, c.getNome());
+            ps.setString(4, c.getEmail());
+            ps.setString(5, c.getTelefone());
+            ps.setString(6, c.getRua());
+            ps.setString(7, c.getPais());
+            ps.setString(8, c.getDistrito());
+            ps.setString(9, c.getConcelho());
+            ps.setString(10, c.getFreguesia());
+
+            ps.executeUpdate();
+            conn.commit();
+
+        } catch (SQLException e) {
+            conn.rollback();
+            throw e;
+        }
+    }
+
+    public void update(Cliente c) throws SQLException {
+        String sql = "UPDATE Cliente SET NIF=?, nome=?, email=?, telefone=?, rua=?, pais=?, distrito=?, concelho=?, freguesia=? WHERE iDUtilizador=?";
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps1 = conn.prepareStatement(sql1);
-             PreparedStatement ps2 = conn.prepareStatement(sql2)) {
-
-            ps1.setInt(1, c.getiDUtilizador());
-            ps1.setBoolean(2, true);
-            ps1.executeUpdate();
-
-            ps2.setInt(1, c.getiDUtilizador());
-            ps2.setString(2, c.getNIF());
-            ps2.setString(3, c.getNome());
-            ps2.setString(4, c.getEmail());
-            ps2.setString(5, c.getTelefone());
-            ps2.setString(6, c.getRua());
-            ps2.setString(7, c.getPais());
-            ps2.setString(8, c.getDistrito());
-            ps2.setString(9, c.getConcelho());
-            ps2.setString(10, c.getFreguesia());
-            ps2.executeUpdate();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, c.getNIF());
+            ps.setString(2, c.getNome());
+            ps.setString(3, c.getEmail());
+            ps.setString(4, c.getTelefone());
+            ps.setString(5, c.getRua());
+            ps.setString(6, c.getPais());
+            ps.setString(7, c.getDistrito());
+            ps.setString(8, c.getConcelho());
+            ps.setString(9, c.getFreguesia());
+            ps.setInt(10, c.getiDUtilizador());
+            ps.executeUpdate();
         }
     }
 
@@ -57,24 +85,6 @@ public class ClienteDAO {
             }
         }
         return null;
-    }
-
-    public void update(Cliente c) throws SQLException {
-        String sql = "UPDATE Cliente SET NIF=?, nome=?, email=?, telefone=?, rua=?, pais=?, distrito=?, concelho=?, freguesia=? WHERE iDUtilizador=?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, c.getNIF());
-            ps.setString(2, c.getNome());
-            ps.setString(3, c.getEmail());
-            ps.setString(4, c.getTelefone());
-            ps.setString(5, c.getRua());
-            ps.setString(6, c.getPais());
-            ps.setString(7, c.getDistrito());
-            ps.setString(8, c.getConcelho());
-            ps.setString(9, c.getFreguesia());
-            ps.setInt(10, c.getiDUtilizador());
-            ps.executeUpdate();
-        }
     }
 
     public void delete(int iDUtilizador) throws SQLException {

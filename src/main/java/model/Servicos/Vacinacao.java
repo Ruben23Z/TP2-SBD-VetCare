@@ -3,6 +3,7 @@ package model.Servicos;
 import model.ServicoMedicoAgendamento;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 // VACINAÇÃO
 public class Vacinacao extends ServicoMedicoAgendamento {
@@ -12,8 +13,8 @@ public class Vacinacao extends ServicoMedicoAgendamento {
     private LocalDate dataValidade;
     private LocalDate dataReforco;
 
-    public Vacinacao(int idServico, String descricao) {
-        super(idServico, descricao);
+    public Vacinacao(int idServico, String descricao, LocalDateTime  dataHoraFim) {
+        super(idServico, descricao,  dataHoraFim);
     }
 
     // getters e setters

@@ -11,8 +11,8 @@ public class Cirurgia extends ServicoMedicoAgendamento {
     private String notas;
     private LocalDateTime dataHoraFim;
 
-    public Cirurgia(int idServico, String descricao) {
-        super(idServico, descricao);
+    public Cirurgia(int idServico, String descricao, LocalDateTime  dataHoraFim) {
+        super(idServico, descricao,  dataHoraFim);
     }
 
     // getters e setters

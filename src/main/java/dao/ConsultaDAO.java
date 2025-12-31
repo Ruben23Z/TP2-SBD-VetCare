@@ -7,6 +7,12 @@ import java.sql.*;
 
 public class ConsultaDAO {
 
+
+
+//    APAGAR?????
+
+
+
     public void create(Consulta cns) throws SQLException {
 
         String sql = """

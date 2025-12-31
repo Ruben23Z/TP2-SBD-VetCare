@@ -4,6 +4,7 @@ import model.Utilizador.Particular;
 import utils.DBConnection;
 
 import java.sql.*;
+import java.util.AbstractSequentialList;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,16 +40,37 @@ public class ParticularDAO {
     }
 
     public Particular findByNIF(String NIF) throws SQLException {
-        String sql = "SELECT * FROM Particular WHERE NIF=?";
+
+        String sql = """
+                    SELECT u.iDUtilizador, c.NIF, u.nome, u.email, u.telefone,
+                           u.rua, u.pais, u.distrito, u.concelho, u.freguesia,
+                           p.prefLinguistica
+                    FROM Particular p
+                    JOIN Cliente c ON p.NIF = c.NIF
+                    JOIN Utilizador u ON c.iDUtilizador = u.iDUtilizador
+                    WHERE p.NIF = ?
+                """;
+
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
+
             ps.setString(1, NIF);
             ResultSet rs = ps.executeQuery();
+
             if (rs.next()) {
-                Particular p = new Particular();
-                p.setNIF(rs.getString("NIF"));
-                p.setPrefLinguistica(rs.getString("prefLinguistica"));
-                return p;
+                return new Particular(
+                        rs.getInt("iDUtilizador"),
+                        rs.getString("NIF"),
+                        rs.getString("nome"),
+                        rs.getString("email"),
+                        rs.getString("telefone"),
+                        rs.getString("rua"),
+                        rs.getString("pais"),
+                        rs.getString("distrito"),
+                        rs.getString("concelho"),
+                        rs.getString("freguesia"),
+                        rs.getString("prefLinguistica")
+                );
             }
         }
         return null;
@@ -56,15 +78,35 @@ public class ParticularDAO {
 
     public List<Particular> findAll() throws SQLException {
         List<Particular> list = new ArrayList<>();
-        String sql = "SELECT * FROM Particular";
+
+        String sql = """
+                    SELECT u.iDUtilizador, c.NIF, u.nome, u.email, u.telefone,
+                           u.rua, u.pais, u.distrito, u.concelho, u.freguesia,
+                           p.prefLinguistica
+                    FROM Particular p
+                    JOIN Cliente c ON p.NIF = c.NIF
+                    JOIN Utilizador u ON c.iDUtilizador = u.iDUtilizador
+                """;
+
         try (Connection conn = DBConnection.getConnection();
-             Statement st = conn.createStatement()) {
-            ResultSet rs = st.executeQuery(sql);
-            while (rs.next()) {
-                Particular p = new Particular();
-                p.setNIF(rs.getString("NIF"));
-                p.setPrefLinguistica(rs.getString("prefLinguistica"));
-                list.add(p);
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                list.add(new Particular(
+                        rs.getInt("iDUtilizador"),
+                        rs.getString("NIF"),
+                        rs.getString("nome"),
+                        rs.getString("email"),
+                        rs.getString("telefone"),
+                        rs.getString("rua"),
+                        rs.getString("pais"),
+                        rs.getString("distrito"),
+                        rs.getString("concelho"),
+                        rs.getString("freguesia"),
+                        rs.getString("prefLinguistica")
+                ));
             }
         }
         return list;

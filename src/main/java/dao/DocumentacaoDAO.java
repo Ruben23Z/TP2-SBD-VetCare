@@ -3,7 +3,7 @@ package dao;
 import utils.DBConnection;
 import java.sql.*;
 
-public class DocumentacaoClinicaDAO {
+public class DocumentacaoDAO {
 
     public ResultSet listarDocumentacao() throws SQLException {
 

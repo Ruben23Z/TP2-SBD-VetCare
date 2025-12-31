@@ -1,13 +1,10 @@
 package model;
 
-import model.Utilizador.Servico;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 // CLASSE BASE: SERVICO MEDICO
 public class ServicoMedicoAgendamento extends Servico {
-     private LocalDateTime dataHoraInicio;
     private LocalDateTime dataHoraAgendada;
     private String estado; // 'ativo','cancelado','reagendado','rejeitado','pendente'
     private BigDecimal custoCancelamento;
@@ -16,8 +13,8 @@ public class ServicoMedicoAgendamento extends Servico {
     private String localidade;
     private boolean fichaIniciadaRececionista;
 
-    public ServicoMedicoAgendamento(int idServico, String descricao) {
-        super(idServico, descricao);
+    public ServicoMedicoAgendamento(int idServico, String descricao, LocalDateTime dataHoraInicio) {
+        super(idServico, descricao, dataHoraInicio);
     }
 
     // getters e setters

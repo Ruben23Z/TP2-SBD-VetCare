@@ -1,76 +1,95 @@
 package servlet;
-
+import dao.UtilizadorDAO;
+import model.Utilizador.Utilizador;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import dao.ClienteDAO;
-import dao.VeterinarioDAO;
-import dao.RececionistaDAO;
-
+import jakarta.servlet.http.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.w3c.dom.*;
+import java.io.File;
 import java.io.IOException;
 
-@WebServlet("/LoginServlet")
+@WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Recebe os parâmetros do formulário
-        String tipoUtilizador = request.getParameter("tipoUtilizador");
-        String usuario = request.getParameter("usuario");
-        String senha = request.getParameter("senha");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
 
-        boolean autenticado = false;
+        // 1️⃣ Validar credenciais no XML
+        Integer idUtilizador = autenticarXML(username, password, request);
 
-        // Validar login conforme tipo de utilizador
-        switch (tipoUtilizador) {
-            case "cliente":
-                ClienteDAO tutorDAO = new ClienteDAO();
-                autenticado = tutorDAO.login(usuario, senha);
-                break;
-            case "veterinario":
-                VeterinarioDAO vetDAO = new VeterinarioDAO();
-                autenticado = vetDAO.login(usuario, senha);
-                break;
-            case "rececionista":
-                RececionistaDAO recDAO = new RececionistaDAO();
-                autenticado = recDAO.login(usuario, senha);
-                break;
-            default:
-                autenticado = false;
+        if (idUtilizador == null) {
+            response.sendRedirect("login.jsp?erro=1");
+            return;
         }
 
-        // Se login válido, cria sessão e redireciona
-        if (autenticado) {
-            HttpSession session = request.getSession();
-            session.setAttribute("usuario", usuario);
-            session.setAttribute("tipoUtilizador", tipoUtilizador);
+        // 2️⃣ Ir à BD buscar o perfil
+        try {
+            UtilizadorDAO dao = new UtilizadorDAO();
+            Utilizador u = dao.findById(idUtilizador);
 
-            switch (tipoUtilizador) {
-                case "cliente":
-                    response.sendRedirect("tutor/consultar.jsp");
-                    break;
-                case "veterinario":
-                    response.sendRedirect("veterinario/fichaAnimal.jsp");
-                    break;
-                case "rececionista":
-                    response.sendRedirect("rececionista/menuRece.jsp");
-                    break;
+            if (u == null) {
+                response.sendRedirect("login.jsp?erro=2");
+                return;
             }
-        } else {
-            // Se login falhou, redireciona de volta com erro
-            response.sendRedirect("login.jsp?erro=1");
+
+            // 3️⃣ Criar sessão
+            HttpSession session = request.getSession(true);
+            session.setAttribute("utilizador", u);
+
+            // 4️⃣ Redirecionar por perfil
+            if (u.isGerente()) {
+                response.sendRedirect("src/main/webapp/gerente/criarAtualizarVet.jsp");
+            } else if (u.isVeterinario()) {
+                response.sendRedirect("src/main/webapp/veterinario/fichaAnimal.jsp");
+            } else if (u.isRececionista()) {
+                response.sendRedirect("src/main/webapp/rececionista/menuRece.jsp");
+            } else if (u.isCliente()) {
+                response.sendRedirect("src/main/webapp/cliente/consultar.jsp");
+            } else {
+                response.sendRedirect("login.jsp?erro=3");
+            }
+
+        } catch (Exception e) {
+            throw new ServletException(e);
         }
     }
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        // Redireciona GET para login.jsp
-        response.sendRedirect("login.jsp");
+    // 🔐 Autenticação no XML
+    private Integer autenticarXML(String user, String pass, HttpServletRequest request) {
+
+        try {
+            String path = request.getServletContext()
+                    .getRealPath("src/main/UtilizadoresXML.xml");
+
+            File xml = new File(path);
+
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document doc = db.parse(xml);
+
+            NodeList lista = doc.getElementsByTagName("utilizador");
+
+            for (int i = 0; i < lista.getLength(); i++) {
+                Element e = (Element) lista.item(i);
+
+                String u = e.getElementsByTagName("username").item(0).getTextContent();
+                String p = e.getElementsByTagName("password").item(0).getTextContent();
+
+                if (u.equals(user) && p.equals(pass)) {
+                    return Integer.parseInt(
+                            e.getElementsByTagName("idUtilizador").item(0).getTextContent()
+                    );
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

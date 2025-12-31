@@ -11,37 +11,33 @@ import java.util.List;
 public class VeterinarioDAO {
 
     // Inserir um veterinário
-    public boolean inserir(Veterinario vet) {
-        String sqlUtilizador = "INSERT INTO Utilizador (iDUtilizador, isVeterinario, isRececionista, isCliente) VALUES (?, ?, ?, ?)";
-        String sqlVeterinario = "INSERT INTO Veterinario (iDUtilizador, nLicenca, nome, idade, especialidade) VALUES (?, ?, ?, ?, ?)";
+    public void inserir(Veterinario v) throws SQLException {
+        Connection c = DBConnection.getConnection();
+        c.setAutoCommit(false);
 
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement psUtil = conn.prepareStatement(sqlUtilizador);
-             PreparedStatement psVet = conn.prepareStatement(sqlVeterinario)) {
+        try {
+            new UtilizadorDAO().inserir(
+                    v.getiDUtilizador(), true, false, false
+            );
 
-            conn.setAutoCommit(false); // transação
+            PreparedStatement ps = c.prepareStatement("""
+                INSERT INTO Veterinario
+                (iDUtilizador, nLicenca, nome, idade, especialidade)
+                VALUES (?, ?, ?, ?, ?)
+            """);
 
-            // Inserir na tabela Utilizador
-            psUtil.setInt(1, vet.getiDUtilizador());
-            psUtil.setBoolean(2, true);
-            psUtil.setBoolean(3, false);
-            psUtil.setBoolean(4, false);
-            psUtil.executeUpdate();
+            ps.setInt(1, v.getiDUtilizador());
+            ps.setString(2, v.getnLicenca());
+            ps.setString(3, v.getNome());
+            ps.setInt(4, v.getIdade());
+            ps.setString(5, v.getEspecialidade());
 
-            // Inserir na tabela Veterinario
-            psVet.setInt(1, vet.getiDUtilizador());
-            psVet.setString(2, vet.getnLicenca());
-            psVet.setString(3, vet.getNome());
-            psVet.setInt(4, vet.getIdade());
-            psVet.setString(5, vet.getEspecialidade());
-            psVet.executeUpdate();
-
-            conn.commit();
-            return true;
+            ps.executeUpdate();
+            c.commit();
 
         } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
+            c.rollback();
+            throw e;
         }
     }
 
