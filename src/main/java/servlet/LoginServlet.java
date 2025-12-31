@@ -65,7 +65,7 @@ public class LoginServlet extends HttpServlet {
 
         try {
             String path = request.getServletContext()
-                    .getRealPath("src/main/UtilizadoresXML.xml");
+                    .getRealPath("/WEB-INF/UtilizadoresXML.xml");
 
             File xml = new File(path);
 
