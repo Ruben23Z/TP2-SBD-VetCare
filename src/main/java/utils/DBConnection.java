@@ -7,9 +7,13 @@ import java.sql.SQLException;
 public class DBConnection {
 
     private static final String URL =
-            "jdbc:mysql://localhost:3306/vetcare?useSSL=false&serverTimezone=UTC";
+            "jdbc:mysql://localhost:3306/VetCare"
+                    + "?useSSL=false"
+                    + "&allowPublicKeyRetrieval=true"
+                    + "&serverTimezone=UTC";
+
     private static final String USER = "root";
-    private static final String PASSWORD = "password";
+    private static final String PASSWORD = "Rubenzhang200512@!";
 
     static {
         try {

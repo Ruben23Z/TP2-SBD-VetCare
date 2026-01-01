@@ -9,27 +9,34 @@ import java.util.List;
 
 public class UtilizadorDAO {
 
-    public void inserir(int id, boolean vet, boolean rec, boolean cli) throws SQLException {
-        String sql = """
-            INSERT INTO Utilizador (iDUtilizador, isVeterinario, isRececionista, isCliente)
-            VALUES (?, ?, ?, ?)
-        """;
+    public int inserir(Utilizador u) throws SQLException {
+        String sql = "INSERT INTO Utilizador (username, password, isVeterinario, isRececionista, isCliente, isGerente) " + "VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (Connection c = DBConnection.getConnection();
-             PreparedStatement ps = c.prepareStatement(sql)) {
+        try (Connection con = DBConnection.getConnection(); PreparedStatement pst = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            ps.setInt(1, id);
-            ps.setBoolean(2, vet);
-            ps.setBoolean(3, rec);
-            ps.setBoolean(4, cli);
-            ps.executeUpdate();
+            pst.setString(1, u.getUsername());
+            pst.setString(2, u.getPassword());
+            pst.setBoolean(3, u.isVeterinario());
+            pst.setBoolean(4, u.isRececionista());
+            pst.setBoolean(5, u.isCliente());
+            pst.setBoolean(6, u.isGerente());
+
+            pst.executeUpdate();
+
+            try (ResultSet rs = pst.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1);  // devolve o ID gerado
+                } else {
+                    throw new SQLException("Erro ao gerar ID do utilizador");
+                }
+            }
         }
     }
 
+
     public void apagar(int id) throws SQLException {
         String sql = "DELETE FROM Utilizador WHERE iDUtilizador=?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
             ps.executeUpdate();
         }
@@ -37,8 +44,7 @@ public class UtilizadorDAO {
 
     public void atualizar(Utilizador u) throws SQLException {
         String sql = "UPDATE Utilizador SET isVeterinario=?, isRececionista=?, isCliente=? WHERE iDUtilizador=?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setBoolean(1, u.isVeterinario());
             ps.setBoolean(2, u.isRececionista());
             ps.setBoolean(3, u.isCliente());
@@ -49,17 +55,11 @@ public class UtilizadorDAO {
 
     public Utilizador findById(int id) throws SQLException {
         String sql = "SELECT * FROM Utilizador WHERE iDUtilizador=?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return new Utilizador(
-                        rs.getInt("iDUtilizador"),
-                        rs.getBoolean("isVeterinario"),
-                        rs.getBoolean("isRececionista"),
-                        rs.getBoolean("isCliente"),
-                        rs.getBoolean("isGerente")
+                return new Utilizador(rs.getInt("iDUtilizador"), rs.getBoolean("isVeterinario"), rs.getBoolean("isRececionista"), rs.getBoolean("isCliente"), rs.getBoolean("isGerente")
 
                 );
             }
@@ -70,16 +70,10 @@ public class UtilizadorDAO {
     public List<Utilizador> findAll() throws SQLException {
         List<Utilizador> list = new ArrayList<>();
         String sql = "SELECT * FROM Utilizador";
-        try (Connection conn = DBConnection.getConnection();
-             Statement st = conn.createStatement()) {
+        try (Connection conn = DBConnection.getConnection(); Statement st = conn.createStatement()) {
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
-                list.add(new Utilizador(
-                        rs.getInt("iDUtilizador"),
-                        rs.getBoolean("isVeterinario"),
-                        rs.getBoolean("isRececionista"),
-                        rs.getBoolean("isCliente"),
-                        rs.getBoolean("isGerente")
+                list.add(new Utilizador(rs.getInt("iDUtilizador"), rs.getBoolean("isVeterinario"), rs.getBoolean("isRececionista"), rs.getBoolean("isCliente"), rs.getBoolean("isGerente")
 
                 ));
             }

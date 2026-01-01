@@ -10,34 +10,36 @@ import java.util.List;
 
 public class VeterinarioDAO {
 
-    // Inserir um veterinário
-    public void inserir(Veterinario v) throws SQLException {
-        Connection c = DBConnection.getConnection();
-        c.setAutoCommit(false);
 
-        try {
-            new UtilizadorDAO().inserir(
-                    v.getiDUtilizador(), true, false, false
-            );
+    public void inserirMinimo(int id) throws SQLException {
+        String sql = "INSERT INTO Veterinario (iDUtilizador, nLicenca) VALUES (?, CONCAT('LIC', ?))";
+        try (Connection c = DBConnection.getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+        }
+    }
 
-            PreparedStatement ps = c.prepareStatement("""
-                INSERT INTO Veterinario
-                (iDUtilizador, nLicenca, nome, idade, especialidade)
-                VALUES (?, ?, ?, ?, ?)
-            """);
+    public void inserir(Veterinario v, int idUtilizador) {
 
-            ps.setInt(1, v.getiDUtilizador());
+        String sql = """
+                    INSERT INTO Veterinario
+                    (iDUtilizador, nLicenca, nome, idade, especialidade)
+                    VALUES (?, ?, ?, ?, ?)
+                """;
+
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, idUtilizador);
             ps.setString(2, v.getnLicenca());
             ps.setString(3, v.getNome());
             ps.setInt(4, v.getIdade());
             ps.setString(5, v.getEspecialidade());
 
             ps.executeUpdate();
-            c.commit();
 
         } catch (SQLException e) {
-            c.rollback();
-            throw e;
+            throw new RuntimeException(e);
         }
     }
 
@@ -45,8 +47,7 @@ public class VeterinarioDAO {
     public boolean atualizar(Veterinario vet) {
         String sql = "UPDATE Veterinario SET nLicenca = ?, nome = ?, idade = ?, especialidade = ? WHERE iDUtilizador = ?";
 
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, vet.getnLicenca());
             ps.setString(2, vet.getNome());
@@ -68,9 +69,7 @@ public class VeterinarioDAO {
         String sqlVet = "DELETE FROM Veterinario WHERE iDUtilizador = ?";
         String sqlUtil = "DELETE FROM Utilizador WHERE iDUtilizador = ?";
 
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement psVet = conn.prepareStatement(sqlVet);
-             PreparedStatement psUtil = conn.prepareStatement(sqlUtil)) {
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement psVet = conn.prepareStatement(sqlVet); PreparedStatement psUtil = conn.prepareStatement(sqlUtil)) {
 
             conn.setAutoCommit(false);
 
@@ -91,24 +90,15 @@ public class VeterinarioDAO {
 
     // Buscar veterinário por ID
     public Veterinario buscarPorID(int idUtilizador) {
-        String sql = "SELECT u.iDUtilizador, v.nLicenca, v.nome, v.idade, v.especialidade " +
-                "FROM Veterinario v JOIN Utilizador u ON v.iDUtilizador = u.iDUtilizador " +
-                "WHERE u.iDUtilizador = ?";
+        String sql = "SELECT u.iDUtilizador, v.nLicenca, v.nome, v.idade, v.especialidade " + "FROM Veterinario v JOIN Utilizador u ON v.iDUtilizador = u.iDUtilizador " + "WHERE u.iDUtilizador = ?";
 
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, idUtilizador);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                return new Veterinario(
-                        rs.getInt("iDUtilizador"),
-                        rs.getString("nLicenca"),
-                        rs.getString("nome"),
-                        rs.getInt("idade"),
-                        rs.getString("especialidade")
-                );
+                return new Veterinario(rs.getInt("iDUtilizador"), rs.getString("nLicenca"), rs.getString("nome"), rs.getInt("idade"), rs.getString("especialidade"));
             }
 
         } catch (SQLException e) {
@@ -120,21 +110,12 @@ public class VeterinarioDAO {
     // Listar todos os veterinários
     public List<Veterinario> listarTodos() {
         List<Veterinario> lista = new ArrayList<>();
-        String sql = "SELECT u.iDUtilizador, v.nLicenca, v.nome, v.idade, v.especialidade " +
-                "FROM Veterinario v JOIN Utilizador u ON v.iDUtilizador = u.iDUtilizador";
+        String sql = "SELECT u.iDUtilizador, v.nLicenca, v.nome, v.idade, v.especialidade " + "FROM Veterinario v JOIN Utilizador u ON v.iDUtilizador = u.iDUtilizador";
 
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                Veterinario vet = new Veterinario(
-                        rs.getInt("iDUtilizador"),
-                        rs.getString("nLicenca"),
-                        rs.getString("nome"),
-                        rs.getInt("idade"),
-                        rs.getString("especialidade")
-                );
+                Veterinario vet = new Veterinario(rs.getInt("iDUtilizador"), rs.getString("nLicenca"), rs.getString("nome"), rs.getInt("idade"), rs.getString("especialidade"));
                 lista.add(vet);
             }
 

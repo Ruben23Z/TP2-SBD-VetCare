@@ -1,21 +1,21 @@
 package model.Utilizador;
 
-public class Particular extends Cliente {
+public class Particular {
+
+    private String nif;
     private String prefLinguistica;
 
-
-    public Particular(int iDUtilizador, String NIF, String nome, String email, String telefone,
-                      String rua, String pais, String distrito, String concelho, String freguesia,
-                      String prefLinguistica) {
-        super(iDUtilizador, NIF, nome, email, telefone, rua, pais, distrito, concelho, freguesia);
+    public Particular(int idUtilizador, String nif, String prefLinguistica, String email, String telefone, String rua, String pais, String distrito, String concelho, String freguesia, String linguistica) {
+        this.nif = nif;
         this.prefLinguistica = prefLinguistica;
     }
 
-    public String getPrefLinguistica() {
-        return prefLinguistica;
-    }
-
-    public void setPrefLinguistica(String prefLinguistica) {
+    public Particular(String nif, String prefLinguistica) {
+        this.nif = nif;
         this.prefLinguistica = prefLinguistica;
     }
+
+
+    public String getNif() { return nif; }
+    public String getPrefLinguistica() { return prefLinguistica; }
 }

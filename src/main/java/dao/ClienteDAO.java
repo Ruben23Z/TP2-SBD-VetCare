@@ -9,23 +9,37 @@ import java.util.List;
 
 public class ClienteDAO {
 
-    public void inserir(Cliente c) throws SQLException {
-        Connection conn = DBConnection.getConnection();
-        conn.setAutoCommit(false);
+    public void inserirMinimo(int idUtilizador) {
 
-        try {
-            new UtilizadorDAO().inserir(
-                    c.getiDUtilizador(), false, false, true
-            );
+        String sql = """
+                INSERT INTO cliente
+                (iDUtilizador, morada, pais)
+                VALUES (?, ?, ?)
+                """;
 
-            PreparedStatement ps = conn.prepareStatement("""
-                INSERT INTO Cliente
-                (iDUtilizador, NIF, nome, email, telefone,
-                 rua, pais, distrito, concelho, freguesia)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """);
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, c.getiDUtilizador());
+            ps.setInt(1, idUtilizador);
+            ps.setString(2, "Morada por definir");
+            ps.setString(3, "Portugal");
+
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    // Inserir todos os campos (completo)
+    public void inserir(Cliente c, int idUtilizador) {
+        String sql = """
+                    INSERT INTO Cliente (iDUtilizador, NIF, nome, email, telefone, rua, pais, distrito, concelho, freguesia)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """;
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, idUtilizador);
             ps.setString(2, c.getNIF());
             ps.setString(3, c.getNome());
             ps.setString(4, c.getEmail());
@@ -37,18 +51,15 @@ public class ClienteDAO {
             ps.setString(10, c.getFreguesia());
 
             ps.executeUpdate();
-            conn.commit();
-
         } catch (SQLException e) {
-            conn.rollback();
-            throw e;
+            throw new RuntimeException(e);
         }
     }
 
+
     public void update(Cliente c) throws SQLException {
         String sql = "UPDATE Cliente SET NIF=?, nome=?, email=?, telefone=?, rua=?, pais=?, distrito=?, concelho=?, freguesia=? WHERE iDUtilizador=?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, c.getNIF());
             ps.setString(2, c.getNome());
             ps.setString(3, c.getEmail());
@@ -65,23 +76,11 @@ public class ClienteDAO {
 
     public Cliente findById(int iDUtilizador) throws SQLException {
         String sql = "SELECT * FROM Cliente WHERE iDUtilizador=?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, iDUtilizador);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return new Cliente(
-                        rs.getInt("iDUtilizador"),
-                        rs.getString("NIF"),
-                        rs.getString("nome"),
-                        rs.getString("email"),
-                        rs.getString("telefone"),
-                        rs.getString("rua"),
-                        rs.getString("pais"),
-                        rs.getString("distrito"),
-                        rs.getString("concelho"),
-                        rs.getString("freguesia")
-                );
+                return new Cliente(rs.getInt("iDUtilizador"), rs.getString("NIF"), rs.getString("nome"), rs.getString("email"), rs.getString("telefone"), rs.getString("rua"), rs.getString("pais"), rs.getString("distrito"), rs.getString("concelho"), rs.getString("freguesia"));
             }
         }
         return null;
@@ -89,8 +88,7 @@ public class ClienteDAO {
 
     public void delete(int iDUtilizador) throws SQLException {
         String sql = "DELETE FROM Cliente WHERE iDUtilizador=?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, iDUtilizador);
             ps.executeUpdate();
         }
@@ -99,22 +97,10 @@ public class ClienteDAO {
     public List<Cliente> findAll() throws SQLException {
         List<Cliente> list = new ArrayList<>();
         String sql = "SELECT * FROM Cliente";
-        try (Connection conn = DBConnection.getConnection();
-             Statement st = conn.createStatement()) {
+        try (Connection conn = DBConnection.getConnection(); Statement st = conn.createStatement()) {
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
-                list.add(new Cliente(
-                        rs.getInt("iDUtilizador"),
-                        rs.getString("NIF"),
-                        rs.getString("nome"),
-                        rs.getString("email"),
-                        rs.getString("telefone"),
-                        rs.getString("rua"),
-                        rs.getString("pais"),
-                        rs.getString("distrito"),
-                        rs.getString("concelho"),
-                        rs.getString("freguesia")
-                ));
+                list.add(new Cliente(rs.getInt("iDUtilizador"), rs.getString("NIF"), rs.getString("nome"), rs.getString("email"), rs.getString("telefone"), rs.getString("rua"), rs.getString("pais"), rs.getString("distrito"), rs.getString("concelho"), rs.getString("freguesia")));
             }
         }
         return list;

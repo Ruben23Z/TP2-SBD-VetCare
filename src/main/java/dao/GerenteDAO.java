@@ -1,9 +1,24 @@
 package dao;
 
 import utils.DBConnection;
+
 import java.sql.*;
 
 public class GerenteDAO {
+    public void inserir(int idUtilizador) {
+
+        String sql = "INSERT INTO Gerente (iDUtilizador) VALUES (?)";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, idUtilizador);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public ResultSet historicoServicos() throws SQLException {
         Connection c = DBConnection.getConnection();
@@ -25,7 +40,8 @@ public class GerenteDAO {
                 "SELECT * FROM Avaliacoes_Detalhadas"
         ).executeQuery();
     }
-public void atribuirGerente(int idUtilizador) throws SQLException {
+
+    public void atribuirGerente(int idUtilizador) throws SQLException {
 
         String sql = "INSERT INTO Gerente (iDUtilizador) VALUES (?)";
 

@@ -1,8 +1,32 @@
-<utilizadores>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><utilizadores>
     <utilizador>
         <username>admin</username>
         <password>1234</password>
-        <cargo>Cliente</cargo>
+        <cargo>Gerente</cargo>
         <idUtilizador>1</idUtilizador>
     </utilizador>
-</utilizadores>
+
+    <utilizador>
+        <username>cliente</username>
+        <password>1234</password>
+        <cargo>Cliente</cargo>
+        <idUtilizador>2</idUtilizador>
+    </utilizador>
+
+
+    <utilizador>
+        <username>rececionista</username>
+        <password>1234</password>
+        <cargo>Rececionista</cargo>
+        <idUtilizador>3</idUtilizador>
+    </utilizador>
+
+    <utilizador>
+        <username>veterinario</username>
+        <password>1234</password>
+        <cargo>Veterinario</cargo>
+        <idUtilizador>4</idUtilizador>
+    </utilizador>
+
+
+<utilizador><username>teste1</username><password>12345</password><cargo>Cliente</cargo><idUtilizador>5</idUtilizador></utilizador><utilizador><username>teste1</username><password>1234567899</password><cargo>Gerente</cargo><idUtilizador>8</idUtilizador></utilizador><utilizador><username>teste1c</username><password>12345</password><cargo>Veterinario</cargo><idUtilizador>11</idUtilizador></utilizador><utilizador><username>teste123</username><password>12345</password><cargo>Rececionista</cargo><idUtilizador>17</idUtilizador></utilizador><utilizador><username>teste1</username><password>1234</password><cargo>Veterinario</cargo><idUtilizador>9</idUtilizador></utilizador><utilizador><username>teste3</username><password>12345</password><cargo>Veterinario</cargo><idUtilizador>1</idUtilizador></utilizador></utilizadores>

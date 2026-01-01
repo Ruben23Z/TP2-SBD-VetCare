@@ -5,11 +5,28 @@ public class Utilizador {
     private boolean isVeterinario;
     private boolean isRececionista;
     private boolean isCliente;
-
     private boolean isGerente;
 
+    private String username;
+    private String password;
 
-    public Utilizador(int iDUtilizador, boolean isVeterinario, boolean isRececionista, boolean isCliente, boolean isGerente) {
+    public Utilizador(boolean isVeterinario, boolean isRececionista, boolean isCliente, boolean isGerente,
+                      String username, String password) {
+        this.isVeterinario = isVeterinario;
+        this.isRececionista = isRececionista;
+        this.isCliente = isCliente;
+        this.isGerente = isGerente;
+        this.username = username;
+        this.password = password;
+    }
+
+    // 2️⃣ Construtor COM ID (quando vem da BD)
+    public Utilizador(int iDUtilizador,
+                      boolean isVeterinario,
+                      boolean isRececionista,
+                      boolean isCliente,
+                      boolean isGerente) {
+
         this.iDUtilizador = iDUtilizador;
         this.isVeterinario = isVeterinario;
         this.isRececionista = isRececionista;
@@ -17,14 +34,23 @@ public class Utilizador {
         this.isGerente = isGerente;
     }
 
-    public boolean isGerente() {
-        return isGerente;
+    public String getPassword() {
+        return password;
     }
 
-    public void setGerente(boolean gerente) {
-        isGerente = gerente;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    // getters e setters
     public int getiDUtilizador() {
         return iDUtilizador;
     }
@@ -57,5 +83,11 @@ public class Utilizador {
         isCliente = cliente;
     }
 
+    public boolean isGerente() {
+        return isGerente;
+    }
 
+    public void setGerente(boolean gerente) {
+        isGerente = gerente;
+    }
 }

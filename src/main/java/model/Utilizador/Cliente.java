@@ -96,4 +96,5 @@ public class Cliente extends Utilizador {
     public void setFreguesia(String freguesia) {
         this.freguesia = freguesia;
     }
+
 }

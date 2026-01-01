@@ -1,8 +1,42 @@
+<!DOCTYPE utilizadores [
+        <!ELEMENT utilizadores (utilizador)*>
+        <!ELEMENT utilizador (username|password|cargo|idUtilizador)*>
+        <!ELEMENT username (#PCDATA)>
+        <!ELEMENT password (#PCDATA)>
+        <!ELEMENT cargo (#PCDATA)>
+        <!ELEMENT idUtilizador (#PCDATA)>
+        ]>
+
+
 <utilizadores>
     <utilizador>
         <username>admin</username>
         <password>1234</password>
-        <cargo>Cliente</cargo>
+        <cargo>Gerente</cargo>
         <idUtilizador>1</idUtilizador>
     </utilizador>
+
+    <utilizador>
+        <username>cliente</username>
+        <password>1234</password>
+        <cargo>Cliente</cargo>
+        <idUtilizador>2</idUtilizador>
+    </utilizador>
+
+
+    <utilizador>
+        <username>rececionista</username>
+        <password>1234</password>
+        <cargo>Rececionista</cargo>
+        <idUtilizador>3</idUtilizador>
+    </utilizador>
+
+    <utilizador>
+        <username>veterinario</username>
+        <password>1234</password>
+        <cargo>Veterinario</cargo>
+        <idUtilizador>4</idUtilizador>
+    </utilizador>
+
+
 </utilizadores>

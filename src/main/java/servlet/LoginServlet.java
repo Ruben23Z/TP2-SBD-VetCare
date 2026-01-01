@@ -1,12 +1,16 @@
 package servlet;
+
 import dao.UtilizadorDAO;
 import model.Utilizador.Utilizador;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.w3c.dom.*;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -37,22 +41,43 @@ public class LoginServlet extends HttpServlet {
                 response.sendRedirect("login.jsp?erro=2");
                 return;
             }
+// 3️⃣ Determinar cargo a partir da BD
+            String cargo;
 
-            // 3️⃣ Criar sessão
-            HttpSession session = request.getSession(true);
-            session.setAttribute("utilizador", u);
-
-            // 4️⃣ Redirecionar por perfil
             if (u.isGerente()) {
-                response.sendRedirect("src/main/webapp/gerente/criarAtualizarVet.jsp");
-            } else if (u.isVeterinario()) {
-                response.sendRedirect("src/main/webapp/veterinario/fichaAnimal.jsp");
+                cargo = "Gerente";
             } else if (u.isRececionista()) {
-                response.sendRedirect("src/main/webapp/rececionista/menuRece.jsp");
+                cargo = "Rececionista";
+            } else if (u.isVeterinario()) {
+                cargo = "Veterinario";
             } else if (u.isCliente()) {
-                response.sendRedirect("src/main/webapp/cliente/consultar.jsp");
+                cargo = "Cliente";
             } else {
                 response.sendRedirect("login.jsp?erro=3");
+                return;
+            }
+
+// 4️⃣ Criar sessão
+            HttpSession session = request.getSession();
+            session.setAttribute("utilizador", u);
+            session.setAttribute("cargo", cargo);
+
+// 5️⃣ Redirecionar
+            String ctx = request.getContextPath();
+
+            switch (cargo) {
+                case "Gerente":
+                    response.sendRedirect(ctx + "/gerente/criarAtualizarVet.jsp");
+                    break;
+                case "Rececionista":
+                    response.sendRedirect(ctx + "/rececionista/menuRece.jsp");
+                    break;
+                case "Veterinario":
+                    response.sendRedirect(ctx + "/veterinario/fichaAnimal.jsp");
+                    break;
+                case "Cliente":
+                    response.sendRedirect(ctx + "/tutor/consultar.jsp");
+                    break;
             }
 
         } catch (Exception e) {

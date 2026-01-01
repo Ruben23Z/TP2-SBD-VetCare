@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -13,9 +13,15 @@
         }
 
         @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         @keyframes fadeInUp {
@@ -30,8 +36,12 @@
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-30px) rotate(5deg); }
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-30px) rotate(5deg);
+            }
         }
 
         @keyframes slideInLeft {
@@ -57,19 +67,35 @@
         }
 
         @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
         }
 
         @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
         }
 
         @keyframes pawPrint {
-            0% { opacity: 0; transform: scale(0) rotate(0deg); }
-            50% { opacity: 0.15; }
-            100% { opacity: 0; transform: scale(2) rotate(180deg); }
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(0deg);
+            }
+            50% {
+                opacity: 0.15;
+            }
+            100% {
+                opacity: 0;
+                transform: scale(2) rotate(180deg);
+            }
         }
 
         body {
@@ -329,12 +355,29 @@
             animation-fill-mode: both;
         }
 
-        .feature-card:nth-child(1) { animation-delay: 0.2s; }
-        .feature-card:nth-child(2) { animation-delay: 0.4s; }
-        .feature-card:nth-child(3) { animation-delay: 0.6s; }
-        .feature-card:nth-child(4) { animation-delay: 0.8s; }
-        .feature-card:nth-child(5) { animation-delay: 1s; }
-        .feature-card:nth-child(6) { animation-delay: 1.2s; }
+        .feature-card:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+
+        .feature-card:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+
+        .feature-card:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        .feature-card:nth-child(4) {
+            animation-delay: 0.8s;
+        }
+
+        .feature-card:nth-child(5) {
+            animation-delay: 1s;
+        }
+
+        .feature-card:nth-child(6) {
+            animation-delay: 1.2s;
+        }
 
         .feature-card:hover {
             transform: translateY(-10px);
@@ -503,7 +546,8 @@
     <div class="hero-content">
         <h1>VetCare</h1>
         <div class="hero-subtitle">Cadeia de Clínicas Veterinárias</div>
-        <p>Assistência médica especializada para animais de companhia. Sistema integrado de gestão com histórico clínico completo, agendamento inteligente e atendimento 24/7 em todas as nossas unidades.</p>
+        <p>Assistência médica especializada para animais de companhia. Sistema integrado de gestão com histórico clínico
+            completo, agendamento inteligente e atendimento 24/7 em todas as nossas unidades.</p>
         <div class="hero-buttons">
             <a href="login.jsp" class="btn-primary">Agendar Consulta</a>
             <a href="#servicos" class="btn-secondary">Os nossos Serviços</a>
@@ -536,22 +580,26 @@
 <section class="features" id="servicos">
     <div class="features-container">
         <h2 class="features-title">Serviços Médicos Veterinários</h2>
-        <p class="features-subtitle">Atendimento completo e especializado para o seu animal de companhia, com tecnologia de ponta e profissionais certificados.</p>
+        <p class="features-subtitle">Atendimento completo e especializado para o seu animal de companhia, com tecnologia
+            de ponta e profissionais certificados.</p>
         <div class="features-grid">
             <div class="feature-card">
                 <div class="feature-icon">🩺</div>
                 <h3>Consultas Médicas</h3>
-                <p>Diagnóstico completo de patologias com prescrição de planos de tratamento personalizados, incluindo medicação e terapias específicas.</p>
+                <p>Diagnóstico completo de patologias com prescrição de planos de tratamento personalizados, incluindo
+                    medicação e terapias específicas.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">🔬</div>
                 <h3>Exames Complementares</h3>
-                <p>Radiografias, ecografias e análises clínicas para diagnóstico preciso e acompanhamento da saúde do seu pet.</p>
+                <p>Radiografias, ecografias e análises clínicas para diagnóstico preciso e acompanhamento da saúde do
+                    seu pet.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">🏥</div>
                 <h3>Cirurgias</h3>
-                <p>Procedimentos cirúrgicos planeados e emergenciais com centro cirúrgico equipado e equipa especializada.</p>
+                <p>Procedimentos cirúrgicos planeados e emergenciais com centro cirúrgico equipado e equipa
+                    especializada.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">💉</div>
@@ -566,7 +614,8 @@
             <div class="feature-card">
                 <div class="feature-icon">📋</div>
                 <h3>Histórico Clínico Digital</h3>
-                <p>Ficha clínica completa com todo o histórico do paciente, resultados de exames e planos de tratamento.</p>
+                <p>Ficha clínica completa com todo o histórico do paciente, resultados de exames e planos de
+                    tratamento.</p>
             </div>
         </div>
     </div>
@@ -575,9 +624,15 @@
 <section class="about-section" id="sobre">
     <div class="about-container">
         <h2>Sobre a VetCare</h2>
-        <p>A VetCare é uma cadeia de clínicas veterinárias dedicada ao cuidado e bem-estar de animais de companhia. Com clínicas estrategicamente localizadas, oferecemos atendimento de excelência com veterinários licenciados e especializados.</p>
-        <p>O nosso sistema integrado de gestão mantém toda a informação centralizada: desde o cadastro de espécies e raças (com características taxonómicas completas), até o histórico clínico detalhado de cada paciente, incluindo consultas, exames, cirurgias, vacinação e tratamentos.</p>
-        <p>Facilitamos o relacionamento com os clientes através de um sistema de agendamento inteligente, permitindo marcações online, cancelamentos e reagendamentos. Os tutores podem ainda avaliar a qualidade dos serviços prestados, ajudando-nos a melhorar continuamente.</p>
+        <p>A VetCare é uma cadeia de clínicas veterinárias dedicada ao cuidado e bem-estar de animais de companhia. Com
+            clínicas estrategicamente localizadas, oferecemos atendimento de excelência com veterinários licenciados e
+            especializados.</p>
+        <p>O nosso sistema integrado de gestão mantém toda a informação centralizada: desde o cadastro de espécies e
+            raças (com características taxonómicas completas), até o histórico clínico detalhado de cada paciente,
+            incluindo consultas, exames, cirurgias, vacinação e tratamentos.</p>
+        <p>Facilitamos o relacionamento com os clientes através de um sistema de agendamento inteligente, permitindo
+            marcações online, cancelamentos e reagendamentos. Os tutores podem ainda avaliar a qualidade dos serviços
+            prestados, ajudando-nos a melhorar continuamente.</p>
     </div>
 </section>
 
