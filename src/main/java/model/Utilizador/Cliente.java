@@ -11,8 +11,7 @@ public class Cliente extends Utilizador {
     private String concelho;
     private String freguesia;
 
-    public Cliente(int iDUtilizador, String NIF, String nome, String email, String telefone,
-                   String rua, String pais, String distrito, String concelho, String freguesia) {
+    public Cliente(int iDUtilizador, String NIF, String nome, String email, String telefone, String rua, String pais, String distrito, String concelho, String freguesia) {
         super(iDUtilizador, false, false, true, false);
         this.NIF = NIF;
         this.nome = nome;

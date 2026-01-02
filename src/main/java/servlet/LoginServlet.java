@@ -24,68 +24,47 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        // 1️⃣ Validar credenciais no XML
-        Integer idUtilizador = autenticarXML(username, password, request);
-
-        if (idUtilizador == null) {
-            response.sendRedirect("login.jsp?erro=1");
-            return;
-        }
-
-        // 2️⃣ Ir à BD buscar o perfil
         try {
             UtilizadorDAO dao = new UtilizadorDAO();
-            Utilizador u = dao.findById(idUtilizador);
+            Utilizador u = dao.findByUsernameAndPassword(username, password);
+            System.out.println(u);
+            System.out.println("senha: " + password);
+            System.out.println("user:" + username);
 
-            if (u == null) {
-                response.sendRedirect("login.jsp?erro=2");
+            if(u == null) {
+                response.sendRedirect("login.jsp?erro=1");
                 return;
             }
-// 3️⃣ Determinar cargo a partir da BD
-            String cargo;
 
-            if (u.isGerente()) {
-                cargo = "Gerente";
-            } else if (u.isRececionista()) {
-                cargo = "Rececionista";
-            } else if (u.isVeterinario()) {
-                cargo = "Veterinario";
-            } else if (u.isCliente()) {
-                cargo = "Cliente";
-            } else {
+            String cargo;
+            if(u.isGerente()) cargo = "Gerente";
+            else if(u.isRececionista()) cargo = "Rececionista";
+            else if(u.isVeterinario()) cargo = "Veterinario";
+            else if(u.isCliente()) cargo = "Cliente";
+            else {
                 response.sendRedirect("login.jsp?erro=3");
                 return;
             }
 
-// 4️⃣ Criar sessão
             HttpSession session = request.getSession();
             session.setAttribute("utilizador", u);
             session.setAttribute("cargo", cargo);
 
-// 5️⃣ Redirecionar
             String ctx = request.getContextPath();
-
-            switch (cargo) {
-                case "Gerente":
-                    response.sendRedirect(ctx + "/gerente/criarAtualizarVet.jsp");
-                    break;
-                case "Rececionista":
-                    response.sendRedirect(ctx + "/rececionista/menuRece.jsp");
-                    break;
-                case "Veterinario":
-                    response.sendRedirect(ctx + "/veterinario/fichaAnimal.jsp");
-                    break;
-                case "Cliente":
-                    response.sendRedirect(ctx + "/tutor/consultar.jsp");
-                    break;
+            switch(cargo) {
+                case "Gerente": response.sendRedirect(ctx + "/gerente/criarAtualizarVet.jsp"); break;
+                case "Rececionista": response.sendRedirect(ctx + "/rececionista/menuRece.jsp"); break;
+                case "Veterinario": response.sendRedirect(ctx + "/veterinario/fichaAnimal.jsp"); break;
+                case "Cliente": response.sendRedirect(ctx + "/tutor/consultar.jsp"); break;
             }
 
         } catch (Exception e) {
-            throw new ServletException(e);
+            e.printStackTrace();
+            response.sendRedirect("login.jsp?erro=1");
         }
     }
 
-    // 🔐 Autenticação no XML
+    // Autenticação no XML
     private Integer autenticarXML(String user, String pass, HttpServletRequest request) {
 
         try {

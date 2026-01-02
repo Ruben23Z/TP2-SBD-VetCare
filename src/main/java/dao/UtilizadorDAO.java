@@ -34,7 +34,7 @@ public class UtilizadorDAO {
     }
 
 
-    public void apagar(int id) throws SQLException {
+    public void delete(int id) throws SQLException {
         String sql = "DELETE FROM Utilizador WHERE iDUtilizador=?";
         try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
@@ -80,4 +80,21 @@ public class UtilizadorDAO {
         }
         return list;
     }
+
+    public Utilizador findByUsernameAndPassword(String username, String password) throws SQLException {
+        String sql = "SELECT * FROM Utilizador WHERE username = ? AND password = ?";
+
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, username);
+            ps.setString(2, password);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Utilizador(rs.getBoolean("isVeterinario"), rs.getBoolean("isRececionista"), rs.getBoolean("isCliente"), rs.getBoolean("isGerente"), rs.getString("username"), rs.getString("password"));
+            }
+        }
+        return null;
+    }
+
 }

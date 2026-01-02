@@ -36,4 +36,14 @@ public class ServicoDAO {
             return rs.getInt(1);
         }
     }
+    public void deleteByCliente(int idUtilizador) throws Exception {
+        String sql = "DELETE FROM ServicoMedicoAgendamento WHERE iDUtilizador = ?";
+
+        try (Connection c = DBConnection.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setInt(1, idUtilizador);
+            ps.executeUpdate();
+        }
+    }
+
 }

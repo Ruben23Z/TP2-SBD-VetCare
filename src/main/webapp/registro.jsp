@@ -157,7 +157,7 @@
             const ativo = document.getElementById("form-" + cargo);
             ativo.classList.remove("hidden");
             ativo.querySelectorAll("input, select").forEach(el => {
-                if(el.name !== "capitalSocial" && el.name !== "prefLinguistica") {
+                if (el.name !== "capitalSocial" && el.name !== "prefLinguistica") {
                     el.required = true;
                 }
             });
@@ -189,20 +189,20 @@
                 const nif = document.querySelector("[name='nif']").value;
 
                 if (!/^\+[0-9]{1,4} [0-9]{9}$/.test(telefone)) {
-                    alert("❌ Telefone inválido. Use o formato +351 912345678");
+                    alert(" Telefone inválido. Use o formato +351 912345678");
                     return false;
                 }
 
                 if (!/^\d{9}$/.test(nif)) {
-                    alert("❌ NIF inválido (9 dígitos).");
+                    alert(" NIF inválido (9 dígitos).");
                     return false;
                 }
 
                 const tipo = document.querySelector("[name='tipoCliente']").value;
-                if(tipo === "Empresa") {
+                if (tipo === "Empresa") {
                     const capital = document.querySelector("[name='capitalSocial']").value;
-                    if(!capital || Number(capital) <= 0) {
-                        alert("❌ Capital social obrigatório e maior que 0 para empresas.");
+                    if (!capital || Number(capital) <= 0) {
+                        alert(" Capital social obrigatório e maior que 0 para empresas.");
                         return false;
                     }
                 }
@@ -359,14 +359,14 @@
         <!-- ================= RECECIONISTA ================= -->
         <div id="form-Rececionista" class="form-cargo hidden">
             <div class="info-box">
-                ✅ Rececionista não requer dados adicionais. Complete os dados de acesso acima.
+                Rececionista não requer dados adicionais. Complete os dados de acesso acima.
             </div>
         </div>
 
         <!-- ================= GERENTE ================= -->
         <div id="form-Gerente" class="form-cargo hidden">
             <div class="info-box">
-                ✅ Gerente não requer dados adicionais. Complete os dados de acesso acima.
+                Gerente não requer dados adicionais. Complete os dados de acesso acima.
             </div>
         </div>
 

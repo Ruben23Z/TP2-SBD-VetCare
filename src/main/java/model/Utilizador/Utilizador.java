@@ -10,8 +10,7 @@ public class Utilizador {
     private String username;
     private String password;
 
-    public Utilizador(boolean isVeterinario, boolean isRececionista, boolean isCliente, boolean isGerente,
-                      String username, String password) {
+    public Utilizador(boolean isVeterinario, boolean isRececionista, boolean isCliente, boolean isGerente, String username, String password) {
         this.isVeterinario = isVeterinario;
         this.isRececionista = isRececionista;
         this.isCliente = isCliente;
@@ -20,12 +19,8 @@ public class Utilizador {
         this.password = password;
     }
 
-    // 2️⃣ Construtor COM ID (quando vem da BD)
-    public Utilizador(int iDUtilizador,
-                      boolean isVeterinario,
-                      boolean isRececionista,
-                      boolean isCliente,
-                      boolean isGerente) {
+    // Construtor COM ID (quando vem da BD)
+    public Utilizador(int iDUtilizador, boolean isVeterinario, boolean isRececionista, boolean isCliente, boolean isGerente) {
 
         this.iDUtilizador = iDUtilizador;
         this.isVeterinario = isVeterinario;
@@ -90,4 +85,5 @@ public class Utilizador {
     public void setGerente(boolean gerente) {
         isGerente = gerente;
     }
+
 }

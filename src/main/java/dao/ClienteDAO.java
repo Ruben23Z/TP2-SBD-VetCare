@@ -86,6 +86,18 @@ public class ClienteDAO {
         return null;
     }
 
+    public Cliente findByNif(int nif) throws SQLException {
+        String sql = "SELECT * FROM Cliente WHERE NIF=?";
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, nif);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Cliente(rs.getInt("iDUtilizador"), rs.getString("NIF"), rs.getString("nome"), rs.getString("email"), rs.getString("telefone"), rs.getString("rua"), rs.getString("pais"), rs.getString("distrito"), rs.getString("concelho"), rs.getString("freguesia"));
+            }
+        }
+        return null;
+    }
+
     public void delete(int iDUtilizador) throws SQLException {
         String sql = "DELETE FROM Cliente WHERE iDUtilizador=?";
         try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {

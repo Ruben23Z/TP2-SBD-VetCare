@@ -39,7 +39,7 @@ public class ServicoMedicoAgendamento extends Servico {
     public int getIdPaciente() { return idPaciente; }
     public void setIdPaciente(int idPaciente) { this.idPaciente = idPaciente; }
 
-    public Integer getIdUtilizador() { return idUtilizador; }
+    public int getIdUtilizador() { return idUtilizador; }
     public void setIdUtilizador(Integer idUtilizador) { this.idUtilizador = idUtilizador; }
 
     public String getLocalidade() { return localidade; }

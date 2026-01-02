@@ -20,4 +20,14 @@ public class EmpresaDAO {
             ps.executeUpdate();
         }
     }
+
+    public void deleteByNif(String nif) throws Exception {
+        String sql = "DELETE FROM Empresa WHERE NIF=?";
+        try (Connection c = DBConnection.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setString(1, nif);
+            ps.executeUpdate();
+        }
+    }
+
 }
