@@ -10,6 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="533f55a0-d5fc-401d-b6e7-c9dfa41ee256" name="Changes" comment="rececionista-&gt;editar e criar feito. falta fazer o eliminar">
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/rececionista/agendarServicoGeral.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/VetCareApp/WEB-INF/classes/dao/AgendamentoDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/VetCareApp/WEB-INF/classes/dao/AgendamentoDAO.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/VetCareApp/WEB-INF/classes/dao/VeterinarioDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/VetCareApp/WEB-INF/classes/dao/VeterinarioDAO.class" afterDir="false" />
@@ -41,8 +42,11 @@
       <change beforePath="$PROJECT_DIR$/src/main/webapp/rececionista/gerirAnimal.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/rececionista/gerirAnimal.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/rececionista/gerirTutor.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/rececionista/gerirTutor.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/rececionista/menuRece.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/rececionista/menuRece.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/AgendamentoDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/AgendamentoDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/VeterinarioDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/VeterinarioDAO.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/model/Servico.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Servico.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/model/ServicoMedicoAgendamento.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/ServicoMedicoAgendamento.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/servlet/AgendamentoServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/servlet/AgendamentoServlet.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/servlet/RececionistaServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/servlet/RececionistaServlet.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -274,7 +278,7 @@
       <workItem from="1767224579271" duration="669000" />
       <workItem from="1767270188816" duration="15628000" />
       <workItem from="1767303910683" duration="9660000" />
-      <workItem from="1767356729503" duration="11576000" />
+      <workItem from="1767356729503" duration="12032000" />
     </task>
     <task id="LOCAL-00001" summary="fahh">
       <option name="closed" value="true" />
