@@ -184,11 +184,11 @@ public class AgendamentoDAO {
             ps.executeUpdate();
         }
     }
+
     // ATIVAR: Muda o estado de 'pendente' para 'ativo'
     public void ativar(int idServico) throws SQLException {
         String sql = "UPDATE ServicoMedicoAgendamento SET estado = 'ativo' WHERE iDServico = ?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, idServico);
             ps.executeUpdate();
         }
@@ -198,23 +198,41 @@ public class AgendamentoDAO {
     // REQUISITO 2.4: Obter agenda do dia/futura para um veterinário específico
     public List<ServicoMedicoAgendamento> getAgendaVeterinario(int idVeterinario) {
         List<ServicoMedicoAgendamento> lista = new ArrayList<>();
-        // Procura serviços ativos ou pendentes, de hoje para a frente
-        String sql = "SELECT * FROM ServicoMedicoAgendamento " + "WHERE iDUtilizador = ? AND dataHoraAgendada >= CURDATE() " + "AND estado IN ('ativo', 'pendente') " + "ORDER BY dataHoraAgendada ASC";
 
-        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+        // SQL: Filtra pelo ID do médico, apenas datas futuras/hoje, estados válidos, ordena por data
+        String sql = "SELECT s.*, p.nome AS nomeAnimal " +
+                "FROM ServicoMedicoAgendamento s " +
+                "JOIN Paciente p ON s.iDPaciente = p.iDPaciente " +
+                "WHERE s.iDUtilizador = ? " +
+                "AND s.dataHoraAgendada >= CURDATE() " +
+                "AND s.estado IN ('ativo', 'pendente') " +
+                "ORDER BY s.dataHoraAgendada ASC";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, idVeterinario);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                ServicoMedicoAgendamento s = new ServicoMedicoAgendamento(rs.getInt("iDServico"), rs.getString("descricao"), rs.getTimestamp("dataHoraInicio").toLocalDateTime());
+                ServicoMedicoAgendamento s = new ServicoMedicoAgendamento(
+                        rs.getInt("iDServico"),
+                        rs.getString("descricao"),
+                        rs.getTimestamp("dataHoraInicio").toLocalDateTime()
+                );
 
-                Timestamp ts = rs.getTimestamp("dataHoraAgendada");
-                if (ts != null) s.setDataHoraAgendada(ts.toLocalDateTime());
+                if (rs.getTimestamp("dataHoraAgendada") != null) {
+                    s.setDataHoraAgendada(rs.getTimestamp("dataHoraAgendada").toLocalDateTime());
+                }
 
                 s.setEstado(rs.getString("estado"));
                 s.setLocalidade(rs.getString("localidade"));
                 s.setIdPaciente(rs.getInt("iDPaciente"));
+                s.setIdUtilizador(rs.getInt("iDUtilizador"));
+
+                // Se tiveres um campo para o nome do animal no modelo ServicoMedicoAgendamento:
+                // s.setNomeAnimal(rs.getString("nomeAnimal"));
+
                 lista.add(s);
             }
         } catch (SQLException e) {
@@ -232,5 +250,6 @@ public class AgendamentoDAO {
             ps.executeUpdate();
         }
     }
+
 
 }

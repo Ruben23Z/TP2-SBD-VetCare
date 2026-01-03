@@ -1,5 +1,6 @@
 package dao;
 
+import model.NoArvore;
 import model.Paciente;
 import utils.DBConnection;
 
@@ -165,5 +166,50 @@ public class PacienteDAO {
 
         p.setFoto(rs.getString("foto"));
         return p;
+    }
+    public NoArvore getArvoreCompleta(int idPaciente) {
+        Paciente p = findById(idPaciente);
+        if (p == null) return null;
+
+        // O animal principal é a raiz da árvore
+        NoArvore noPrincipal = new NoArvore(p, "Paciente");
+
+        // Carrega os pais recursivamente
+        carregarAncestrais(noPrincipal, idPaciente, 0);
+
+        return noPrincipal;
+    }
+
+    // MÉTODO PRIVADO (RECURSIVO): Procura pais, avós, etc.
+    private void carregarAncestrais(NoArvore noFilho, int idFilho, int nivel) {
+        // Limite de segurança para não bloquear o servidor (5 gerações)
+        if (nivel > 5) return;
+
+        String sql = "SELECT p.*, pp.tipoProgenitor " +
+                "FROM Paciente p " +
+                "JOIN Paciente_Paciente pp ON p.iDPaciente = pp.iDPaciente_Progenitor " +
+                "WHERE pp.iDPaciente_Filho = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, idFilho);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                // Mapear o Pai/Mãe
+                Paciente pai = mapResultSetToPaciente(rs);
+                String tipo = rs.getString("tipoProgenitor");
+
+                // Criar o nó e adicionar à lista do filho
+                NoArvore noPai = new NoArvore(pai, tipo != null ? tipo.toUpperCase() : "PROGENITOR");
+                noFilho.adicionarProgenitor(noPai);
+
+                // RECURSÃO: Ir buscar os pais deste pai
+                carregarAncestrais(noPai, pai.getidPaciente(), nivel + 1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

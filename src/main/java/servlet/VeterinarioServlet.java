@@ -2,6 +2,7 @@ package servlet;
 
 import dao.AgendamentoDAO;
 import dao.PacienteDAO;
+import model.NoArvore;
 import model.Paciente;
 import model.ServicoMedicoAgendamento;
 import model.Utilizador.Utilizador;
@@ -26,25 +27,25 @@ public class VeterinarioServlet extends HttpServlet {
         HttpSession session = req.getSession();
         Utilizador user = (Utilizador) session.getAttribute("utilizador");
 
-        // Proteção: Só veterinários podem aceder
+        // Proteção de sessão
         if (user == null || !user.isVeterinario()) {
             resp.sendRedirect("login.jsp");
             return;
         }
 
-        // 1. Dashboard (Menu Principal)
         if ("dashboard".equals(action)) {
             req.getRequestDispatcher("veterinario/menuVeterinario.jsp").forward(req, resp);
         }
 
-        // 2. Lista de Chamada (Agenda do dia)
+        // REQUISITO 2.4: LISTA DE CHAMADA
         else if ("listaChamada".equals(action)) {
+            System.out.println("DEBUG SERVLET: ID na Sessão = " + user.getiDUtilizador());
             AgendamentoDAO dao = new AgendamentoDAO();
             List<ServicoMedicoAgendamento> agenda = dao.getAgendaVeterinario(user.getiDUtilizador());
+            System.out.println("DEBUG SERVLET: Tamanho da lista encontrada = " + agenda.size());
             req.setAttribute("agenda", agenda);
             req.getRequestDispatcher("veterinario/listaChamada.jsp").forward(req, resp);
         }
-
         // 3. Consultar Ficha Clínica (Dados, Idade, Árvore, Histórico)
         else if ("consultarFicha".equals(action)) {
             try {
@@ -52,25 +53,26 @@ public class VeterinarioServlet extends HttpServlet {
                 PacienteDAO pDao = new PacienteDAO();
                 AgendamentoDAO aDao = new AgendamentoDAO();
 
-                // Dados do Paciente
+                // 1. Dados do Animal
                 Paciente p = pDao.findById(idPaciente);
                 req.setAttribute("animal", p);
 
-                // Árvore Genealógica (Pais)
-                List<Paciente> pais = pDao.getPais(idPaciente);
-                req.setAttribute("pais", pais);
+                // 2. ÁRVORE GENEALÓGICA (AQUI ESTÁ O SEGREDO)
+                NoArvore arvore = pDao.getArvoreCompleta(idPaciente);
+                req.setAttribute("arvore", arvore); // Envia para o JSP
 
-                // Histórico de Serviços
+                // 3. Histórico
                 List<ServicoMedicoAgendamento> historico = aDao.listarPorAnimal(idPaciente);
                 req.setAttribute("historico", historico);
 
                 req.getRequestDispatcher("veterinario/fichaAnimal.jsp").forward(req, resp);
-            } catch (NumberFormatException e) {
+            } catch (Exception e) {
+                e.printStackTrace();
                 resp.sendRedirect("VeterinarioServlet?action=dashboard");
             }
         }
 
-        // 4. AJAX: Autocomplete (Retorna JSON manual)
+        // 4. Autocomplete
         else if ("buscarAnimaisAJAX".equals(action)) {
             String termo = req.getParameter("termo");
             List<Paciente> lista = new PacienteDAO().buscarPorNomeTutor(termo);
@@ -89,6 +91,7 @@ public class VeterinarioServlet extends HttpServlet {
             out.print("]");
             out.flush();
         }
+
     }
 
     @Override
@@ -106,7 +109,7 @@ public class VeterinarioServlet extends HttpServlet {
                 new AgendamentoDAO().atualizarNotas(idServico, notas);
 
                 // Volta para a ficha do animal
-                resp.sendRedirect("VeterinarioServlet?action=consultarFicha&idPaciente=" + idPaciente + "&msg=notasAtualizadas");
+                resp.sendRedirect("VeterinarioServlet?action=consultarFicha&idPaciente=" + idPaciente);
             } catch (Exception e) {
                 e.printStackTrace();
                 resp.sendRedirect("VeterinarioServlet?action=dashboard&msg=erro");

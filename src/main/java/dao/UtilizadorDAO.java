@@ -32,7 +32,35 @@ public class UtilizadorDAO {
             }
         }
     }
+    public Utilizador login(String username, String password) {
+        Utilizador u = null;
+        String sql = "SELECT * FROM Utilizador WHERE username = ? AND password = ?";
 
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                // Cria o utilizador (garante que tens o construtor vazio na classe Utilizador)
+                u = new Utilizador();
+
+                u.setiDUtilizador(rs.getInt("iDUtilizador"));
+                System.out.println("DEBUG LOGIN: Utilizador " + u.getUsername() + " tem ID: " + u.getiDUtilizador());                // ---------------------------------------------------
+
+                u.setUsername(rs.getString("username"));
+                u.setVeterinario(rs.getBoolean("isVeterinario"));
+                u.setRececionista(rs.getBoolean("isRececionista"));
+                u.setCliente(rs.getBoolean("isCliente"));
+                u.setGerente(rs.getBoolean("isGerente"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return u;
+    }
 
     public void delete(int id) throws SQLException {
         String sql = "DELETE FROM Utilizador WHERE iDUtilizador=?";
@@ -81,20 +109,35 @@ public class UtilizadorDAO {
         return list;
     }
 
-    public Utilizador findByUsernameAndPassword(String username, String password) throws SQLException {
+    public Utilizador findByUsernameAndPassword(String username, String password) {
+        Utilizador u = null;
         String sql = "SELECT * FROM Utilizador WHERE username = ? AND password = ?";
 
-        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, username);
             ps.setString(2, password);
-
             ResultSet rs = ps.executeQuery();
+
             if (rs.next()) {
-                return new Utilizador(rs.getBoolean("isVeterinario"), rs.getBoolean("isRececionista"), rs.getBoolean("isCliente"), rs.getBoolean("isGerente"), rs.getString("username"), rs.getString("password"));
+                u = new Utilizador(); // Usa o construtor vazio que criámos
+
+                // === A LINHA MÁGICA QUE CORRIGE O PROBLEMA ===
+                u.setiDUtilizador(rs.getInt("iDUtilizador"));
+                // =============================================
+
+                u.setUsername(rs.getString("username"));
+                u.setPassword(rs.getString("password"));
+                u.setVeterinario(rs.getBoolean("isVeterinario"));
+                u.setRececionista(rs.getBoolean("isRececionista"));
+                u.setCliente(rs.getBoolean("isCliente"));
+                u.setGerente(rs.getBoolean("isGerente"));
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return null;
+        return u;
     }
 
 }
