@@ -1,78 +1,76 @@
-# VetCare — Sistema de Gestão para Clínicas Veterinárias
+# VetCare — Veterinary Clinic Management System
 
-> Plataforma web completa para gestão operacional de uma cadeia de clínicas veterinárias, desenvolvida no âmbito da unidade curricular de **Sistemas de Bases de Dados** no ISEL.
-
----
-
-## Contexto e Motivação
-
-A gestão de clínicas veterinárias envolve uma multiplicidade de processos que, quando geridos de forma manual ou fragmentada, originam ineficiências operacionais: marcações perdidas, históricos clínicos incompletos, dificuldade em rastrear o estado de saúde dos animais ao longo do tempo e ausência de uma visão consolidada da atividade da clínica.
-
-O **VetCare** foi desenvolvido para dar resposta a este problema, propondo um sistema de informação centralizado que suporta o ciclo de vida completo de um paciente veterinário — desde o registo do animal e do seu tutor, até ao histórico clínico detalhado, passando pelo agendamento de serviços e pela gestão administrativa da equipa médica.
-
-O projeto foi concebido e implementado como trabalho final da disciplina de Sistemas de Bases de Dados (LEIM — ISEL), com o objetivo de aplicar em contexto prático os conceitos de modelação relacional, integridade referencial, transações, triggers e vistas sobre bases de dados.
+> A full-stack web platform for operational management of a veterinary clinic chain, developed for the **Database Systems** course at ISEL.
 
 ---
 
-## Principais Funcionalidades
+## Context
 
-**Gestão de Utilizadores e Perfis**
-- Suporte a quatro perfis distintos — Cliente (Tutor), Rececionista, Veterinário e Gerente — cada um com acesso restrito às funcionalidades que lhe dizem respeito.
-- Registo e autenticação com redirecionamento automático para o painel correspondente ao perfil do utilizador.
+Managing veterinary clinics involves multiple interconnected processes that, when handled manually or in isolation, create operational inefficiencies: missed appointments, incomplete clinical histories, and no consolidated view of clinic activity.
 
-**Gestão de Pacientes e Tutores**
-- Registo completo de animais de companhia, incluindo dados clínicos, fotografia, microchip (transponder) e raça com respetiva espécie.
-- Associação de animais a tutores (particulares ou empresas), com validação de NIF e morada.
-- **Árvore genealógica** interativa por paciente, com navegação entre gerações de progenitores.
+**VetCare** addresses this with a centralised information system covering the full lifecycle of a veterinary patient — from animal and owner registration, through appointment scheduling, to detailed clinical history and staff administration.
 
-**Agendamento de Serviços Médicos**
-- Criação, reagendamento e cancelamento de serviços a partir de qualquer perfil autorizado.
-- Suporte a seis tipos de serviço distintos: Consulta, Cirurgia, Vacinação, Desparasitação, Tratamento Terapêutico e Exame (com sub-especializações em Radiografia, Ecografia e Análise Clínica).
-- Confirmação de presença e gestão de estados (pendente, ativo, reagendado, cancelado).
-
-**Ficha Clínica e Histórico**
-- Acesso ao histórico completo de serviços por paciente, com possibilidade de edição de notas clínicas pelos veterinários.
-- Lista de chamada diária personalizada por veterinário.
-- Pesquisa de pacientes por nome do tutor com sugestão automática em tempo real.
-
-**Estatísticas e Relatórios (Painel do Gerente)**
-- Identificação de animais que superaram a esperança média de vida da sua espécie.
-- Monitorização de animais com excesso de peso face ao padrão da raça.
-- Ranking de tutores com maior número de cancelamentos no último trimestre.
-- Previsão semanal de serviços agendados, com distribuição por tipo.
-
-**Importação e Exportação de Dados**
-- Exportação de fichas clínicas individuais em formato **JSON** e **XML**.
-- Importação de fichas a partir de ficheiros nos mesmos formatos, com validação de dados.
-
-**Controlo de Horários**
-- Atribuição de veterinários a clínicas e dias úteis, com validação automática de conflitos de horário.
+The project was built as the final assignment for the Database Systems course (LEIM — ISEL), applying relational modelling, referential integrity, transactions, triggers, and views in a practical context.
 
 ---
 
-## Tecnologias Empregues
+## Features
 
-- **Java (Jakarta EE / Servlets)** — Lógica de negócio e controlo do fluxo da aplicação.
-- **JSP (JavaServer Pages)** — Renderização das interfaces de utilizador no servidor.
-- **MySQL** — Base de dados relacional com triggers, vistas e constraints de integridade.
-- **JDBC** — Comunicação direta entre a aplicação Java e a base de dados.
-- **Bootstrap 5** — Componentes visuais e design responsivo.
-- **HTML5 / CSS3 / JavaScript** — Interface de utilizador e interatividade no cliente.
-- **Apache Tomcat** — Servidor de aplicações web.
+**User Profiles & Access Control**
+- Four distinct roles — Client (Owner), Receptionist, Vet, and Manager — each restricted to their relevant functionality
+- Registration and authentication with automatic redirection to the role-specific dashboard
+
+**Patients & Owners**
+- Full pet registration including clinical data, photo, microchip (transponder), and breed/species
+- Association with individual or corporate owners, with NIF and address validation
+- Interactive **genealogy tree** per patient, with navigation across ancestor generations
+
+**Medical Service Scheduling**
+- Create, reschedule, and cancel appointments from any authorised role
+- Six service types: Consultation, Surgery, Vaccination, Deworming, Therapeutic Treatment, and Examination (with sub-types: X-Ray, Ultrasound, Lab Analysis)
+- Attendance confirmation and status management (pending, active, rescheduled, cancelled)
+
+**Clinical Records**
+- Full service history per patient, with vet-editable clinical notes
+- Daily call list per veterinarian
+- Real-time patient search by owner name with auto-suggest
+
+**Statistics & Reports (Manager Panel)**
+- Animals that have exceeded their species' average life expectancy
+- Animals overweight relative to their breed standard
+- Ranking of owners with the most cancellations in the last quarter
+- Weekly forecast of scheduled services by type
+
+**Data Import / Export**
+- Export individual clinical records as **JSON** or **XML**
+- Import records from the same formats, with data validation
+
+**Schedule Management**
+- Assign vets to clinics and working days, with automatic conflict validation
 
 ---
 
-## Impacto e Aprendizagem
+## Technologies
 
-Este projeto representou uma oportunidade de consolidar, em ambiente prático, um conjunto alargado de competências técnicas e de engenharia de software.
-
-Do ponto de vista da **base de dados**, foi necessário desenhar um esquema relacional capaz de representar hierarquias de especialização (um serviço médico pode ser uma consulta, uma cirurgia, ou um exame — com atributos distintos em cada caso), garantindo ao mesmo tempo exclusividade de especialização através de triggers. A gestão de transações atómicas — por exemplo, na criação simultânea de um utilizador e do seu perfil específico — exigiu raciocínio cuidadoso sobre consistência e integridade dos dados.
-
-Do ponto de vista da **arquitetura aplicacional**, foi aplicado o padrão MVC com separação clara entre a camada de acesso a dados (DAOs), a lógica de controlo (Servlets) e a apresentação (JSPs). O controlo de acesso por perfil de utilizador, implementado via filtros de sessão, introduziu preocupações reais de segurança e autorização.
-
-Em suma, o VetCare demonstra a capacidade de conceber, modelar e implementar uma aplicação web com múltiplos perfis de utilizador, regras de negócio complexas e uma base de dados relacional robusta — competências diretamente transferíveis para contextos profissionais de desenvolvimento de software.
+- **Java (Jakarta EE / Servlets)** — business logic and application flow
+- **JSP (JavaServer Pages)** — server-side UI rendering
+- **MySQL** — relational database with triggers, views, and integrity constraints
+- **JDBC** — direct Java-to-database communication
+- **Bootstrap 5** — UI components and responsive design
+- **HTML5 / CSS3 / JavaScript** — client-side interface and interactivity
+- **Apache Tomcat** — web application server
 
 ---
 
-> **Autores:** Ruben Zhang (51388) · Marcelo Almeida (51888) · Gonçalo Ribeiro (51813)
-> **Unidade Curricular:** Sistemas de Bases de Dados — LEIM, ISEL
+## What I Learned
+
+**Database design:** modelling specialisation hierarchies (a medical service can be a consultation, surgery, or examination — each with distinct attributes) while enforcing exclusivity via triggers. Atomic transaction management — e.g. simultaneously creating a user and their role-specific profile — required careful reasoning about consistency and data integrity.
+
+**Application architecture:** MVC pattern with clear separation between data access (DAOs), control logic (Servlets), and presentation (JSPs). Role-based access control via session filters introduced real security and authorisation concerns.
+
+VetCare demonstrates the ability to design, model, and implement a multi-role web application with complex business rules and a robust relational database — skills directly transferable to professional software development.
+
+---
+
+> **Authors:** Ruben Zhang (51388) · Marcelo Almeida (51888) · Gonçalo Ribeiro (51813)
+> **Course:** Database Systems — LEIM, ISEL
